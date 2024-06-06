@@ -1,6 +1,50 @@
+:root {
+  --background-color: transparent;
+  --backdrop-filter: blur(10px);
+  --border-radius: 10px;
+  --border: solid 2px white;
+  --button-bg-color: rgba(0, 0, 0, 0.151);
+  --button-color: white;
+}
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  text-align: center;
+  color: white;
   padding: 50px;
+  background-image: url(images/girl-7628308_1920.jpg);
+}
+.blurred-box {
+  background-color: var(--background-color);
+  backdrop-filter: var(--backdrop-filter);
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+header {
+  text-align: left;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 20px;
+  padding-top: 20px;
+}
+.sideBar {
+  height: 100%;
+
+  grid-column: 1/2;
+}
+.sideTitle {
+  display: flex;
+  justify-content: space-between;
+}
+button {
+  background-color: rgba(0, 0, 0, 0.151);
+  border: none;
+  height: 40px;
+  width: 60px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  align-self: center;
+  cursor: pointer;
 }
