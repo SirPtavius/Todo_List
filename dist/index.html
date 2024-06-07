@@ -2,11 +2,88 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webpack Setup</title>
-    <script defer="defer" src="index_bundle.js"></script>
-  </head>
+  <script defer src="index_bundle.js"></script></head>
   <body>
+    <header class="blurred-box">
+      <h1>To Do List</h1>
+    </header>
+    <main class="container">
+      <div class="sideBar blurred-box">
+        <div class="toDo">
+          <div class="sideTitle">
+            <h2>To Do</h2>
+            <button>New</button>
+          </div>
+          <div>
+            <p>All</p>
+            <p>Today</p>
+            <p>High Prority</p>
+          </div>
+        </div>
+        <div class="projects">
+          <div class="sideTitle">
+            <h2>Projects</h2>
+            <button>New</button>
+          </div>
+          <div>
+            <p>Work</p>
+            <p>Sport</p>
+            <p>School</p>
+          </div>
+        </div>
+      </div>
+      <div class="todoList blurred-box">
+        <div class="taskInfo">
+          <div class="leftInfo">
+            <input type="checkbox" />
+            <p>TITLETITLE</p>
+          </div>
+          <div class="rightInfo">
+            <p>Sab 6, 2024</p>
+            <button>Details</button>
+            <img src="images/icons/modify.png" alt="Modify" />
+            <img src="images/icons/delete-icon.png" alt="Delite" />
+          </div>
+        </div>
+      </div>
+      <div class="info blurred-box">
+        <form action="">
+          <input
+            type="text"
+            name="task"
+            id="task"
+            placeholder="New Todo"
+            class="input-box"
+          />
+          <textarea
+            name="description"
+            id="description"
+            placeholder="Description"
+            maxlength="250"
+            class="input-box"
+          ></textarea>
+          <div class="formSection">
+            <div class="coupleTag">
+              <input type="date" name="date" id="date" class="input-box" />
+              <select name="prority" id="prority" class="input-box">
+                <option disabled="disabled" selected="selected">
+                  Priority
+                </option>
+                <option value="1">Low</option>
+                <option value="2">Normal</option>
+                <option value="3">High</option>
+              </select>
+            </div>
+            <div class="coupleTag">
+              <button class="cancel input-box">Cancel</button>
+              <button class="submit input-box">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
     <script src="index_bundle.js"></script>
   </body>
 </html>
