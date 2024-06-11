@@ -23,6 +23,7 @@ body {
 
 header {
   text-align: left;
+  padding: 10px;
 }
 
 main.container {
@@ -35,6 +36,7 @@ main.container {
 .sideBar {
   height: 100%;
   grid-column: 1/2;
+  padding: 10px;
 }
 
 .sideTitle {
@@ -45,9 +47,9 @@ main.container {
 button {
   background-color: var(--button-bg-color);
   border: none;
-  height: 40px;
-  width: 60px;
-  border-radius: 50%;
+  height: 35px;
+  width: 70px;
+  border-radius: 10px;
   font-weight: bold;
   color: var(--button-color);
   align-self: center;
@@ -78,7 +80,7 @@ button {
   width: 100%;
 }
 
-#task {
+#name {
   height: 40px;
   font-size: 30px;
   margin-bottom: 40px;
@@ -115,4 +117,38 @@ button {
 option {
   color: black;
   font-weight: bold;
+}
+.icon {
+  height: 30px;
+  filter: invert(100%);
+}
+.taskInfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.leftInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.rightInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.addTask {
+  margin-top: 10px;
+}
+.btnProjects {
+  background-color: transparent;
+  font-size: 20px;
+}
+button:hover {
+  transform: scale(1.1);
+  transition: 0.8s;
+}
+button:active {
+  transform: scale(0.8);
+  transition: 0.8s;
 }

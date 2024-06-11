@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: "index_bundle.js",
     path: path.resolve(__dirname, "dist"),
-    clean: true, // Pulisce la cartella dist prima di ogni build
+    clean: true, // Pulire la cartella dist prima di ogni build
   },
   module: {
     rules: [
@@ -25,7 +25,7 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
         type: "asset/resource",
         generator: {
           filename: "images/[name][ext]",
@@ -38,5 +38,11 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
+  devServer: {
+    static: path.join(__dirname, "dist"),
+    compress: true,
+    port: 8080,
+    open: true,
+  },
   mode: "development",
 };
