@@ -1,15 +1,18 @@
+import { Project, projectsList } from "./project";
+import { Task } from "./task";
+
+const btnNewTask = document.querySelector(".newTask");
+btnNewTask.addEventListener("click", createForm);
+
 function createForm() {
-  // Seleziona l'elemento div in cui desideri inserire il codice HTML
   const divElement = document.querySelector(".info.blurred-box");
 
-  // Svuota l'elemento div per prevenire duplicazioni
   divElement.innerHTML = "";
 
-  // Crea l'elemento form
   const form = document.createElement("form");
   form.setAttribute("action", "");
 
-  // Crea l'input per il nome
+  //title name
   const inputName = document.createElement("input");
   inputName.setAttribute("type", "text");
   inputName.setAttribute("name", "name");
@@ -17,7 +20,31 @@ function createForm() {
   inputName.setAttribute("placeholder", "Task Name");
   inputName.classList.add("input-box");
 
-  // Crea il textarea per la descrizione
+  //select project
+  const selectProject = document.createElement("select");
+  selectProject.setAttribute("name", "SelectProject");
+  selectProject.setAttribute("id", "SelectProject");
+  selectProject.classList.add("input-box");
+  selectProject.setAttribute("id", "projectSelector");
+
+  const optionDefault2 = document.createElement("option");
+  optionDefault2.setAttribute("disabled", "disabled");
+  optionDefault2.setAttribute("selected", "selected");
+  optionDefault2.textContent = "Select Project";
+  selectProject.appendChild(optionDefault2);
+
+  const optionNone = document.createElement("option");
+  optionNone.textContent = "None";
+  selectProject.appendChild(optionNone);
+
+  // Populate project options
+  projectsList.forEach((project) => {
+    const option = document.createElement("option");
+    option.textContent = project.name;
+    selectProject.appendChild(option);
+  });
+
+  //description
   const textarea = document.createElement("textarea");
   textarea.setAttribute("name", "description");
   textarea.setAttribute("id", "description");
@@ -25,28 +52,26 @@ function createForm() {
   textarea.setAttribute("maxlength", "250");
   textarea.classList.add("input-box");
 
-  // Crea la sezione del form
   const formSection = document.createElement("div");
   formSection.classList.add("formSection");
 
-  // Crea la prima coppia di tag
   const coupleTag1 = document.createElement("div");
   coupleTag1.classList.add("coupleTag");
 
-  // Crea l'input per la data
+  //date
   const inputDate = document.createElement("input");
   inputDate.setAttribute("type", "date");
   inputDate.setAttribute("name", "date");
   inputDate.setAttribute("id", "date");
   inputDate.classList.add("input-box");
 
-  // Crea il select per la priorità
+  // select priority
   const selectPriority = document.createElement("select");
   selectPriority.setAttribute("name", "priority");
   selectPriority.setAttribute("id", "priority");
   selectPriority.classList.add("input-box");
 
-  // Crea le opzioni del select per la priorità
+  //options
   const optionDefault = document.createElement("option");
   optionDefault.setAttribute("disabled", "disabled");
   optionDefault.setAttribute("selected", "selected");
@@ -64,64 +89,148 @@ function createForm() {
   optionHigh.setAttribute("value", "3");
   optionHigh.textContent = "High";
 
-  // Aggiungi le opzioni al select
   selectPriority.appendChild(optionDefault);
   selectPriority.appendChild(optionLow);
   selectPriority.appendChild(optionNormal);
   selectPriority.appendChild(optionHigh);
 
-  // Aggiungi l'input data e il select alla prima coppia di tag
   coupleTag1.appendChild(inputDate);
   coupleTag1.appendChild(selectPriority);
 
-  // Crea la seconda coppia di tag
   const coupleTag2 = document.createElement("div");
   coupleTag2.classList.add("coupleTag");
 
-  // Crea il pulsante di cancellazione
   const buttonCancel = document.createElement("button");
   buttonCancel.classList.add("cancel", "input-box");
   buttonCancel.textContent = "Cancel";
 
-  // Crea il pulsante di invio
   const buttonSubmit = document.createElement("button");
   buttonSubmit.classList.add("submit", "input-box");
   buttonSubmit.textContent = "Submit";
 
-  // Aggiungi i pulsanti alla seconda coppia di tag
   coupleTag2.appendChild(buttonCancel);
   coupleTag2.appendChild(buttonSubmit);
 
-  // Aggiungi le coppie di tag alla sezione del form
   formSection.appendChild(coupleTag1);
   formSection.appendChild(coupleTag2);
 
-  // Aggiungi l'input nome e il textarea al form
   form.appendChild(inputName);
+  form.appendChild(selectProject); //PROJECT
   form.appendChild(textarea);
 
-  // Aggiungi la sezione del form al form
   form.appendChild(formSection);
 
-  // Aggiungi il form all'elemento div selezionato
   divElement.appendChild(form);
-}
-function newProject() {
-  const divProject = document.querySelector(".projects");
 
-  // Crea l'input per il nome
+  //EVENT LISTENER BUTTONS
+  buttonCancel.addEventListener("click", () => {
+    divElement.innerHTML = "";
+  });
+  buttonSubmit.addEventListener("click", () => {
+    const taskName = inputName.value;
+    const description = textarea.value;
+    const date = inputDate.value;
+    const priority = selectPriority.value;
+    const project = selectProject.value; // Aggiungi il progetto selezionato
+
+    // Task instance
+    const newTask = new Task(taskName, description, date, priority, project);
+
+    addTaskToDOM(newTask);
+
+    divElement.innerHTML = "";
+  });
+}
+
+function addTaskToDOM(task) {
+  const tasksContainer = document.querySelector(".tasks");
+
+  const taskInfoDiv = document.createElement("div");
+  taskInfoDiv.classList.add("taskInfo", "blurred-box");
+  taskInfoDiv.setAttribute("data-project", task.project);
+  taskInfoDiv.setAttribute("data-task-id", task.id);
+
+  const leftInfoDiv = document.createElement("div");
+  leftInfoDiv.classList.add("leftInfo");
+
+  const checkbox = document.createElement("input");
+  checkbox.setAttribute("type", "checkbox");
+
+  const taskNameP = document.createElement("p");
+  taskNameP.textContent = task.name;
+
+  const taskDescriptionP = document.createElement("p");
+  taskDescriptionP.textContent = task.description;
+
+  leftInfoDiv.appendChild(checkbox);
+  leftInfoDiv.appendChild(taskNameP);
+  leftInfoDiv.appendChild(taskDescriptionP);
+
+  const rightInfoDiv = document.createElement("div");
+  rightInfoDiv.classList.add("rightInfo");
+
+  const dateP = document.createElement("p");
+  dateP.textContent = task.date;
+
+  const priorityP = document.createElement("p");
+  priorityP.textContent = task.priority;
+
+  switch (task.priority) {
+    case "1":
+      priorityP.style.color = "green";
+      priorityP.textContent = "Low";
+      break;
+    case "2":
+      priorityP.style.color = "orange";
+      priorityP.textContent = "Normal";
+      break;
+    case "3":
+      priorityP.style.color = "red";
+      priorityP.textContent = "High";
+      break;
+    default:
+      priorityP.style.color = "black";
+      priorityP.textContent = "Unknown";
+  }
+
+  const detailsButton = document.createElement("button");
+  detailsButton.classList.add("details");
+  detailsButton.textContent = "Details";
+
+  const modifyImg = document.createElement("img");
+  modifyImg.setAttribute("src", "images/modify.png");
+  modifyImg.setAttribute("alt", "Modify");
+  modifyImg.classList.add("icon");
+
+  const deleteImg = document.createElement("img");
+  deleteImg.setAttribute("src", "images/delete-icon.png");
+  deleteImg.setAttribute("alt", "Delete");
+  deleteImg.classList.add("icon");
+
+  rightInfoDiv.appendChild(dateP);
+  rightInfoDiv.appendChild(priorityP);
+  rightInfoDiv.appendChild(detailsButton);
+  rightInfoDiv.appendChild(modifyImg);
+  rightInfoDiv.appendChild(deleteImg);
+
+  taskInfoDiv.appendChild(leftInfoDiv);
+  taskInfoDiv.appendChild(rightInfoDiv);
+
+  tasksContainer.appendChild(taskInfoDiv);
+}
+
+export function newProject() {
   const inputName = document.createElement("input");
   inputName.setAttribute("type", "text");
   inputName.setAttribute("name", "name");
   inputName.setAttribute("id", "name");
   inputName.setAttribute("placeholder", "Project Name");
   inputName.classList.add("input-box");
-  // Crea il pulsante di cancellazione
+
   const buttonCancel = document.createElement("button");
   buttonCancel.classList.add("cancel", "input-box");
   buttonCancel.textContent = "Cancel";
 
-  // Crea il pulsante di invio
   const buttonSubmit = document.createElement("button");
   buttonSubmit.classList.add("submit", "input-box");
   buttonSubmit.textContent = "Submit";
@@ -135,4 +244,84 @@ function newProject() {
   divInfo.innerHTML = "";
   divInfo.appendChild(inputName);
   divInfo.appendChild(coupleButton);
+
+  buttonCancel.addEventListener("click", () => {
+    divInfo.innerHTML = "";
+  });
+
+  buttonSubmit.addEventListener("click", () => {
+    const projectName = inputName.value;
+
+    const newProject = new Project(projectName);
+
+    projectsList.push(newProject);
+
+    const button = document.createElement("button");
+    button.innerText = newProject.name;
+    button.classList.add("btnSidebar");
+    button.addEventListener("click", () =>
+      filterTasksByProject(newProject.name)
+    ); // Event listener per filtrare task
+    const divProjects = document.querySelector(".projects");
+    divProjects.appendChild(button);
+
+    // Aggiorna il select input per le task con il nuovo progetto
+    updateProjectOptions();
+
+    divInfo.innerHTML = "";
+  });
 }
+
+function filterTasksByProject(projectName) {
+  const allTasks = document.querySelectorAll(".taskInfo");
+  allTasks.forEach((task) => {
+    if (
+      task.getAttribute("data-project") === projectName ||
+      projectName === "None"
+    ) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+}
+function updateProjectOptions() {
+  const selectProject = document.getElementById("projectSelector");
+
+  if (!selectProject) {
+    console.error("Element with ID 'projectSelector' not found in the DOM.");
+    return;
+  }
+
+  selectProject.innerHTML = "";
+
+  const optionDefault = document.createElement("option");
+  optionDefault.setAttribute("disabled", "disabled");
+  optionDefault.setAttribute("selected", "selected");
+  optionDefault.textContent = "Select Project";
+  selectProject.appendChild(optionDefault);
+
+  const optionNone = document.createElement("option");
+  optionNone.textContent = "None";
+  selectProject.appendChild(optionNone);
+
+  projectsList.forEach((project) => {
+    const option = document.createElement("option");
+    option.setAttribute("value", project.name);
+    option.textContent = project.name;
+    selectProject.appendChild(option);
+  });
+}
+
+/*
+
+
+document.getElementById("today").addEventListener("click", todayTask);
+function todayTask() {
+  //mostra solamente le task che hanno la stessa data di oggi
+}
+document.getElementById("highPriority").addEventListener("click", highPriority);
+function highPriority() {
+  //mostra solamente le task che hanno la priorità "High"
+}
+*/

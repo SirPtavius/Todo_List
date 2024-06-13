@@ -12,45 +12,26 @@
     <main class="container">
       <div class="sideBar blurred-box">
         <div class="toDo">
-          <div class="sideTitle">
-            <h2>To Do</h2>
-            <button>New</button>
-          </div>
-          <div>
-            <p>All</p>
-            <p>Today</p>
-            <p>High Prority</p>
+          <h2>Filter</h2>
+          <div class="filter">
+            <button class="btnSidebar" id="all">All</button>
+            <button class="btnSidebar" id="Today">Today</button>
+            <button class="btnSidebar" id="highPriority">High Prority</button>
           </div>
         </div>
         <div class="projects">
           <div class="sideTitle">
-            <button class="btnProjects">Projects</button>
-          </div>
-          <div>
-            <p>Work</p>
-            <p>Sport</p>
-            <p>School</p>
+            <h2>Projects</h2>
+            <button class="btnProjects">+</button>
+            <div class="domProjects"></div>
           </div>
         </div>
       </div>
 
       <div class="tasksContainer">
-        <div class="tasks">
-          <div class="taskInfo blurred-box">
-            <div class="leftInfo">
-              <input type="checkbox" />
-              <p>TITLETITLE</p>
-            </div>
-            <div class="rightInfo">
-              <p>Sab 6, 2024</p>
-              <button class="details">Details</button>
-              <img src="images/modify.png" alt="Modify" class="icon" />
-              <img src="images/delete-icon.png" alt="Delete" class="icon" />
-            </div>
-          </div>
-        </div>
+        <div class="tasks"></div>
         <div class="addTask blurred-box">
-          <p>+ Add Task</p>
+          <button class="newTask">+ Add Task</button>
         </div>
       </div>
 
@@ -59,40 +40,3 @@
     <script src="index_bundle.js"></script>
   </body>
 </html>
-<!--
-
-<form action="">
-  <input
-    type="text"
-    name="name"
-    id="name"
-    placeholder="New Todo"
-    class="input-box"
-  />
-  <textarea
-    name="description"
-    id="description"
-    placeholder="Description"
-    maxlength="250"
-    class="input-box"
-  ></textarea>
-  <div class="formSection">
-    <div class="coupleTag">
-      <input type="date" name="date" id="date" class="input-box" />
-      <select name="priority" id="priority" class="input-box">
-        <option disabled="disabled" selected="selected">
-          Priority
-        </option>
-        <option value="1">Low</option>
-        <option value="2">Normal</option>
-        <option value="3">High</option>
-      </select>
-    </div>
-    <div class="coupleTag">
-      <button class="cancel input-box">Cancel</button>
-      <button class="submit input-box">Submit</button>
-    </div>
-  </div>
-</form>;
-
--->
