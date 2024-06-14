@@ -171,9 +171,11 @@ function addTaskToDOM(task) {
 
   const dateP = document.createElement("p");
   dateP.textContent = task.date;
+  dateP.classList.add("date");
 
   const priorityP = document.createElement("p");
   priorityP.textContent = task.priority;
+  priorityP.classList.add("priority");
 
   switch (task.priority) {
     case "1":
@@ -313,15 +315,43 @@ function updateProjectOptions() {
   });
 }
 
-/*
+document.getElementById("all").addEventListener("click", () => {
+  const allTasks = document.querySelectorAll(".taskInfo");
+  allTasks.forEach((task) => {
+    task.style.display = "flex";
+  });
+});
 
+document.getElementById("highPriority").addEventListener("click", () => {
+  const allTasks = document.querySelectorAll(".taskInfo");
 
-document.getElementById("today").addEventListener("click", todayTask);
-function todayTask() {
-  //mostra solamente le task che hanno la stessa data di oggi
+  allTasks.forEach((task) => {
+    const priorityElement = task.querySelector(".priority");
+    if (priorityElement.textContent === "High") {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+});
+
+document.getElementById("today").addEventListener("click", () => {
+  const allTasks = document.querySelectorAll(".taskInfo");
+  allTasks.forEach((task) => {
+    const taskDate = task.querySelector(".date");
+    if (taskDate.textContent === getFormattedDate()) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
+    }
+  });
+});
+
+function getFormattedDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // I mesi vanno da 0 a 11, quindi aggiungiamo 1
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
-document.getElementById("highPriority").addEventListener("click", highPriority);
-function highPriority() {
-  //mostra solamente le task che hanno la priorità "High"
-}
-*/
