@@ -4,8 +4,8 @@ projects = {
                 projectName:[name, description, date, priority];
               }
 */
-import { formatDistance, subDays } from "date-fns";
-formatDistance(subDays(new Date(), 3), new Date(), { addSuffix: true });
+
+export let tasksList = [];
 
 export class Task {
   constructor(name, description, date, priority, project) {
@@ -35,5 +35,22 @@ export class Task {
 
   get project() {
     return this._project;
+  }
+}
+
+export function addTask(task) {
+  tasksList.push(task);
+}
+
+export function removeTask(taskId) {
+  const index = tasksList.findIndex((task) => task.id === taskId);
+  if (index !== -1) {
+    tasksList.splice(index, 1);
+  }
+}
+export function updateTask(updatedTask) {
+  const taskIndex = tasksList.findIndex((task) => task.id === updatedTask.id);
+  if (taskIndex !== -1) {
+    tasksList[taskIndex] = updatedTask;
   }
 }

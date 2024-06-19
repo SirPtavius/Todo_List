@@ -1,3 +1,7 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
 :root {
   --background-color: transparent;
   --backdrop-filter: blur(10px);
@@ -22,52 +26,72 @@ body {
 }
 
 header {
+  display: flex;
+  gap: 20px;
   text-align: left;
   padding: 10px;
+}
+header > h1 {
+  align-self: center;
+}
+.logo {
+  align-self: center;
+  height: 70px;
+  filter: invert(100);
 }
 
 main.container {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 20% 60% auto;
   gap: 20px;
   padding-top: 20px;
 }
 
 .sideBar {
-  height: 100%;
+  height: 75vh;
   grid-column: 1/2;
-  padding: 10px;
+  padding: 20px;
 }
 
 .sideTitle {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 30px;
 }
 
 .filter {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 20px;
 }
 
 .btnSidebar {
+  width: auto;
   padding-left: 20px;
   background-color: transparent;
-  font-size: 17px;
-  width: 150px;
+  font-size: 20px;
   text-align: left;
-  align-self: start;
+  align-self: center;
 }
 
 .projects {
-  margin-top: 20px;
+  padding-top: 30px;
 }
 
 .btnProjects {
   background-color: transparent;
-  font-size: 30px;
+  font-size: 40px;
+  text-align: center;
+  width: 80px;
 }
-
+#details {
+  height: 40px;
+  width: 80px;
+  font-size: 15px;
+}
 button {
   background-color: var(--button-bg-color);
   border: none;
@@ -96,7 +120,8 @@ button:active {
   flex-direction: column;
   padding: 20px;
   gap: 20px;
-  height: 100%;
+  height: 60%;
+  justify-content: center;
 }
 
 .info form {
@@ -132,17 +157,18 @@ button:active {
   font-size: 18px;
   margin-bottom: 35px;
 }
-
+form {
+  justify-content: center;
+}
 .formSection {
-  margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 35px;
 }
 
 .coupleTag {
   display: flex;
   gap: 20px;
-  margin-bottom: 35px;
   height: 40px;
   font-size: 20px;
 }
@@ -165,35 +191,79 @@ option {
   justify-content: space-between;
   padding: 10px;
   margin-bottom: 20px;
+  height: 50px;
 }
 
 .leftInfo {
   display: flex;
   align-items: center;
   gap: 20px;
+  max-width: 70%;
+}
+.leftInfo :nth-child(2) {
+  font-weight: bold;
+  font-size: 20px;
+}
+.leftInfo :nth-child(3) {
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .rightInfo {
+  justify-content: flex-end;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
 .icon {
-  height: 30px;
+  height: 40px;
   filter: invert(100%);
+  cursor: pointer;
+}
+.icon:hover {
+  transform: scale(1.1);
+  transition: 0.8s;
 }
 
-.addTask {
-  margin-top: 10px;
+.icon:active {
+  transform: scale(0.8);
+  transition: 0.8s;
 }
 
 .newTask {
   background-color: transparent;
+  height: 50px;
   width: 100%;
-  height: 40px;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding: 10px;
 }
-.domProject {
+.domProjects {
   display: flex;
   flex-direction: column;
+  gap: 30px;
+}
+
+.projImg {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.viewFlex {
+  display: flex;
+}
+.viewFlex > .btnSidebar {
+  height: auto;
+  align-self: center;
+  width: auto;
+}
+.viewFlex > img {
+  cursor: auto;
+}
+.viewFlex > img:hover {
+  transform: none;
 }

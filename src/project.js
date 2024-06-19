@@ -4,7 +4,7 @@ const projects = document.querySelector(".btnProjects");
 projects.addEventListener("click", newProject);
 
 // Lista globale dei progetti
-export const projectsList = [];
+export let projectsList = [];
 
 export class Project {
   constructor(name) {
