@@ -1,10 +1,3 @@
-/*
-projects = {
-                projectName:[name, description, date, priority], [name, description, date, priority];
-                projectName:[name, description, date, priority];
-              }
-*/
-
 export let tasksList = [];
 
 export class Task {
@@ -51,6 +44,8 @@ export function removeTask(taskId) {
 export function updateTask(updatedTask) {
   const taskIndex = tasksList.findIndex((task) => task.id === updatedTask.id);
   if (taskIndex !== -1) {
+    //  console.log("updateTask, taskList[taskIndex] pre modifica =",tasksList[taskIndex]);
     tasksList[taskIndex] = updatedTask;
   }
+  // console.log("updateTask, taskList[taskIndex] post modifica =",tasksList[taskIndex]);
 }

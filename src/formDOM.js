@@ -242,46 +242,50 @@ function addTaskToDOM(task) {
 
   tasksContainer.appendChild(taskInfoDiv);
 }
-//add some style
+
 function showTaskDetails(task) {
   const divElement = document.querySelector(".info.blurred-box");
   divElement.innerHTML = "";
 
-  const title = document.createElement("h2");
+  const title = document.createElement("h1");
   title.textContent = "Task Details";
 
   const taskName = document.createElement("p");
-  taskName.textContent = `Name: ${task.name}`;
+
+  taskName.innerHTML = `<b>Name:</b> ${task.name}`;
+  taskName.classList.add("detailsTaskName");
 
   const taskDescription = document.createElement("p");
-  taskDescription.textContent = `Description: ${task.description}`;
+  taskDescription.innerHTML = `<b>Description:</b> ${task.description}`;
+  taskDescription.classList.add("detailsDescription");
 
   const taskDate = document.createElement("p");
-  taskDate.textContent = `Date: ${task.date}`;
+  taskDate.innerHTML = `<b>Date:</b> ${task.date}`;
+  taskDate.classList.add("detailsDate");
 
   const taskPriority = document.createElement("p");
-  taskPriority.textContent = `Priority: ${task.priority}`;
-
   switch (task.priority) {
     case "1":
       taskPriority.style.color = "green";
-      taskPriority.textContent = "Priority: Low";
+      taskPriority.innerHTML = `<b style="color: white;">Priority:</b> Low`;
       break;
     case "2":
       taskPriority.style.color = "orange";
-      taskPriority.textContent = "Priority: Normal";
+      taskPriority.innerHTML = `<b style="color: white;">Priority:</b> Normal`;
       break;
     case "3":
       taskPriority.style.color = "red";
-      taskPriority.textContent = "Priority: High";
+      taskPriority.innerHTML = `<b style="color: white;">Priority:</b> High`;
       break;
     default:
       taskPriority.style.color = "black";
-      taskPriority.textContent = "Priority: Unknown";
+      taskPriority.innerHTML = `<b style="color: white;>Priority:</b> Unknown`;
   }
+  taskPriority.classList.add("detailsPriority");
 
   const taskProject = document.createElement("p");
-  taskProject.textContent = `Project: ${task.project}`;
+  taskProject.innerHTML = `<b>Project:</b> ${task.project}`;
+  taskProject.classList.add("detailsProject");
 
   divElement.appendChild(title);
   divElement.appendChild(taskName);
@@ -290,6 +294,7 @@ function showTaskDetails(task) {
   divElement.appendChild(taskPriority);
   divElement.appendChild(taskProject);
 }
+
 export function newProject() {
   const inputName = document.createElement("input");
   inputName.setAttribute("type", "text");
@@ -525,6 +530,7 @@ function editTaskForm(task) {
   divElement.innerHTML = "";
 
   const form = document.createElement("form");
+
   form.setAttribute("action", "");
 
   // Title name
@@ -652,7 +658,7 @@ function editTaskForm(task) {
   });
   buttonSubmit.addEventListener("click", () => {
     const updatedTask = {
-      ...task,
+      id: task.id,
       name: inputName.value,
       description: textarea.value,
       date: inputDate.value,
@@ -660,8 +666,14 @@ function editTaskForm(task) {
       project: selectProject.value,
     };
 
-    updateTask(updatedTask); // Aggiorna la task nella lista globale
-    updateTaskInDOM(updatedTask); // Aggiorna la task nel DOM
+    task._date = updatedTask.date;
+    task._name = updatedTask.name;
+    task._description = updatedTask.description;
+    task._priority = updatedTask.priority;
+    task._project = updatedTask.project;
+
+    updateTask(updatedTask);
+    updateTaskInDOM(updatedTask);
 
     divElement.innerHTML = "";
   });
