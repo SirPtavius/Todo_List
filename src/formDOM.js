@@ -43,7 +43,6 @@ function createForm() {
     option.setAttribute("id", project.name);
     option.textContent = project.name;
     selectProject.appendChild(option);
-    console.log(projectsList);
   });
 
   //description
@@ -439,7 +438,8 @@ function filterTasksByProject(projectName) {
         )} does not have a project assigned.`
       );
     }
-
+    console.log(task);
+    console.log("taskProject=", taskProject, "projectName=", projectName);
     if (taskProject === projectName || projectName === "None") {
       console.log(`Showing task with ID ${task.getAttribute("data-task-id")}`);
       task.style.display = "flex";
@@ -521,6 +521,7 @@ function updateTaskInDOM(updatedTask) {
         priorityP.style.color = "black";
         priorityP.textContent = "Unknown";
     }
+    taskInfoDiv.setAttribute("data-project", updatedTask.project);
   }
 }
 
