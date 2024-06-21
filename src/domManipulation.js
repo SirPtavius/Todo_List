@@ -1,10 +1,7 @@
-import { Project, projectsList } from "./project";
-import { Task, addTask, removeTask, tasksList, updateTask } from "./task";
+import { projectsList } from "./project";
+import { addTask, Task, removeTask, updateTask } from "./task";
 
-const btnNewTask = document.querySelector(".newTask");
-btnNewTask.addEventListener("click", createForm);
-
-function createForm() {
+export function createForm() {
   const divElement = document.querySelector(".info.blurred-box");
 
   divElement.innerHTML = "";
@@ -143,7 +140,7 @@ function createForm() {
   });
 }
 
-function addTaskToDOM(task) {
+export function addTaskToDOM(task) {
   const tasksContainer = document.querySelector(".tasks");
 
   const taskInfoDiv = document.createElement("div");
@@ -242,7 +239,7 @@ function addTaskToDOM(task) {
   tasksContainer.appendChild(taskInfoDiv);
 }
 
-function showTaskDetails(task) {
+export function showTaskDetails(task) {
   const divElement = document.querySelector(".info.blurred-box");
   divElement.innerHTML = "";
 
@@ -294,238 +291,7 @@ function showTaskDetails(task) {
   divElement.appendChild(taskProject);
 }
 
-export function newProject() {
-  const inputName = document.createElement("input");
-  inputName.setAttribute("type", "text");
-  inputName.setAttribute("name", "name");
-  inputName.setAttribute("id", "name");
-  inputName.setAttribute("placeholder", "Project Name");
-  inputName.classList.add("input-box");
-
-  const buttonCancel = document.createElement("button");
-  buttonCancel.classList.add("cancel", "input-box");
-  buttonCancel.textContent = "Cancel";
-
-  const buttonSubmit = document.createElement("button");
-  buttonSubmit.classList.add("submit", "input-box");
-  buttonSubmit.textContent = "Submit";
-
-  const coupleButton = document.createElement("div");
-  coupleButton.classList.add("coupleTag");
-  coupleButton.appendChild(buttonCancel);
-  coupleButton.appendChild(buttonSubmit);
-
-  const divInfo = document.querySelector(".info.blurred-box");
-  divInfo.innerHTML = "";
-  divInfo.appendChild(inputName);
-  divInfo.appendChild(coupleButton);
-
-  buttonCancel.addEventListener("click", () => {
-    divInfo.innerHTML = "";
-  });
-
-  buttonSubmit.addEventListener("click", () => {
-    const projectName = inputName.value;
-
-    const newProject = new Project(projectName);
-
-    projectsList.push(newProject);
-
-    const divProject = document.createElement("div");
-
-    divProject.classList.add("projImg");
-    const button = document.createElement("button");
-    button.innerText = newProject.name;
-
-    button.classList.add("btnSidebar");
-    button.addEventListener("click", () =>
-      filterTasksByProject(newProject.name)
-    );
-
-    const deleteImg = document.createElement("img");
-    deleteImg.setAttribute("src", "images/delete-icon.png");
-    deleteImg.setAttribute("alt", "Delete");
-    deleteImg.setAttribute("id", "deleteProject");
-    deleteImg.classList.add("icon");
-
-    deleteImg.addEventListener("click", function () {
-      const projectName = button.innerText;
-      const divProject = this.parentNode;
-
-      divProject.remove();
-      //remove tag option
-
-      const projectIndex = projectsList.findIndex(
-        (project) => project.name === projectName
-      );
-      if (projectIndex !== -1) {
-        projectsList.splice(projectIndex, 1);
-      }
-
-      //remove all tasks assosiacted to the project from DOM and taskList
-      const tasksContainer = document.querySelector(".tasks");
-      tasksList.forEach((task, index) => {
-        if (task.project === projectName) {
-          // remove task from DOM
-          const taskElement = tasksContainer.querySelector(
-            `.taskInfo[data-task-id="${task.id}"]`
-          );
-          if (taskElement) {
-            taskElement.remove();
-          }
-
-          // remove task from tasksList
-          tasksList.splice(index, 1);
-        }
-      });
-
-      updateProjectOptions();
-    });
-
-    const domProjects = document.querySelector(".domProjects");
-
-    divProject.appendChild(button);
-    divProject.appendChild(deleteImg);
-    domProjects.appendChild(divProject);
-
-    updateProjectOptions();
-
-    divInfo.innerHTML = "";
-  });
-}
-
-function updateProjectOptions() {
-  const selectProject = document.getElementById("projectSelector");
-
-  if (!selectProject) {
-    console.error("Element with ID 'projectSelector' not found in the DOM.");
-    return;
-  }
-
-  selectProject.innerHTML = "";
-
-  const optionDefault = document.createElement("option");
-  optionDefault.setAttribute("disabled", "disabled");
-  optionDefault.setAttribute("selected", "selected");
-  optionDefault.textContent = "Select Project";
-  selectProject.appendChild(optionDefault);
-
-  const optionNone = document.createElement("option");
-  optionNone.textContent = "None";
-  selectProject.appendChild(optionNone);
-
-  projectsList.forEach((project) => {
-    const option = document.createElement("option");
-    option.setAttribute("value", project.name);
-    option.textContent = project.name;
-    selectProject.appendChild(option);
-  });
-}
-
-function filterTasksByProject(projectName) {
-  const allTasks = document.querySelectorAll(".taskInfo");
-
-  allTasks.forEach((task) => {
-    const taskProject = task.getAttribute("data-project");
-    console.log(
-      `Filtering for project: ${projectName}, task project: ${taskProject}`
-    );
-
-    if (!taskProject) {
-      console.warn(
-        `Task with ID ${task.getAttribute(
-          "data-task-id"
-        )} does not have a project assigned.`
-      );
-    }
-    console.log(task);
-    console.log("taskProject=", taskProject, "projectName=", projectName);
-    if (taskProject === projectName || projectName === "None") {
-      console.log(`Showing task with ID ${task.getAttribute("data-task-id")}`);
-      task.style.display = "flex";
-    } else {
-      console.log(`Hiding task with ID ${task.getAttribute("data-task-id")}`);
-      task.style.display = "none";
-    }
-  });
-}
-document.getElementById("all").addEventListener("click", () => {
-  const allTasks = document.querySelectorAll(".taskInfo");
-  allTasks.forEach((task) => {
-    task.style.display = "flex";
-  });
-});
-
-document.getElementById("highPriority").addEventListener("click", () => {
-  const allTasks = document.querySelectorAll(".taskInfo");
-
-  allTasks.forEach((task) => {
-    const priorityElement = task.querySelector(".priority");
-    if (priorityElement.textContent === "High") {
-      task.style.display = "flex";
-    } else {
-      task.style.display = "none";
-    }
-  });
-});
-
-document.getElementById("today").addEventListener("click", () => {
-  const allTasks = document.querySelectorAll(".taskInfo");
-  allTasks.forEach((task) => {
-    const taskDate = task.querySelector(".date");
-    if (taskDate.textContent === getFormattedDate()) {
-      task.style.display = "flex";
-    } else {
-      task.style.display = "none";
-    }
-  });
-});
-
-function getFormattedDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
-function updateTaskInDOM(updatedTask) {
-  const taskInfoDiv = document.querySelector(
-    `.taskInfo[data-task-id="${updatedTask.id}"]`
-  );
-  if (taskInfoDiv) {
-    taskInfoDiv.querySelector(".leftInfo p:first-of-type").textContent =
-      updatedTask.name;
-    taskInfoDiv.querySelector(".leftInfo p:nth-of-type(2)").textContent =
-      updatedTask.description;
-    taskInfoDiv.querySelector(".rightInfo .date").textContent =
-      updatedTask.date;
-    const priorityP = taskInfoDiv.querySelector(".rightInfo .priority");
-    priorityP.textContent = updatedTask.priority;
-
-    switch (updatedTask.priority) {
-      case "1":
-        priorityP.style.color = "green";
-        priorityP.textContent = "Low";
-        break;
-      case "2":
-        priorityP.style.color = "orange";
-        priorityP.textContent = "Normal";
-        break;
-      case "3":
-        priorityP.style.color = "red";
-        priorityP.textContent = "High";
-        break;
-      default:
-        priorityP.style.color = "black";
-        priorityP.textContent = "Unknown";
-    }
-    taskInfoDiv.setAttribute("data-project", updatedTask.project);
-  }
-}
-
-function editTaskForm(task) {
+export function editTaskForm(task) {
   const divElement = document.querySelector(".info.blurred-box");
 
   divElement.innerHTML = "";
@@ -678,4 +444,38 @@ function editTaskForm(task) {
 
     divElement.innerHTML = "";
   });
+}
+export function updateTaskInDOM(updatedTask) {
+  const taskInfoDiv = document.querySelector(
+    `.taskInfo[data-task-id="${updatedTask.id}"]`
+  );
+  if (taskInfoDiv) {
+    taskInfoDiv.querySelector(".leftInfo p:first-of-type").textContent =
+      updatedTask.name;
+    taskInfoDiv.querySelector(".leftInfo p:nth-of-type(2)").textContent =
+      updatedTask.description;
+    taskInfoDiv.querySelector(".rightInfo .date").textContent =
+      updatedTask.date;
+    const priorityP = taskInfoDiv.querySelector(".rightInfo .priority");
+    priorityP.textContent = updatedTask.priority;
+
+    switch (updatedTask.priority) {
+      case "1":
+        priorityP.style.color = "green";
+        priorityP.textContent = "Low";
+        break;
+      case "2":
+        priorityP.style.color = "orange";
+        priorityP.textContent = "Normal";
+        break;
+      case "3":
+        priorityP.style.color = "red";
+        priorityP.textContent = "High";
+        break;
+      default:
+        priorityP.style.color = "black";
+        priorityP.textContent = "Unknown";
+    }
+    taskInfoDiv.setAttribute("data-project", updatedTask.project);
+  }
 }

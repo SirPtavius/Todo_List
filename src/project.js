@@ -1,8 +1,3 @@
-import { newProject } from "./formDOM";
-
-const projects = document.querySelector(".btnProjects");
-projects.addEventListener("click", newProject);
-
 // Lista globale dei progetti
 export let projectsList = [];
 

@@ -58,7 +58,9 @@ main.container {
   justify-content: space-between;
   padding-bottom: 30px;
 }
-
+.sideTitle :nth-child(1) {
+  align-self: center;
+}
 .filter {
   display: flex;
   flex-direction: column;
@@ -84,8 +86,8 @@ main.container {
 .btnProjects {
   background-color: transparent;
   font-size: 40px;
-  text-align: center;
   width: 80px;
+  height: auto;
 }
 #details {
   height: 40px;
