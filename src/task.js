@@ -1,3 +1,4 @@
+import { saveDataToLocalStorage } from "./eventHandler";
 export let tasksList = [];
 
 export class Task {
@@ -33,17 +34,38 @@ export class Task {
 
 export function addTask(task) {
   tasksList.push(task);
+  saveDataToLocalStorage();
 }
 
 export function removeTask(taskId) {
-  const index = tasksList.findIndex((task) => task.id === taskId);
-  if (index !== -1) {
-    tasksList.splice(index, 1);
+  const taskIndex = tasksList.findIndex((task) => task.id === taskId);
+  if (taskIndex !== -1) {
+    tasksList.splice(taskIndex, 1);
+    saveDataToLocalStorage();
   }
+
+  localStorage.setItem("tasksList", JSON.stringify(tasksList));
 }
 export function updateTask(updatedTask) {
   const taskIndex = tasksList.findIndex((task) => task.id === updatedTask.id);
   if (taskIndex !== -1) {
     tasksList[taskIndex] = updatedTask;
+  }
+}
+export function loadTasksFromLocalStorage() {
+  const storedTasks = localStorage.getItem("tasksList");
+  if (storedTasks) {
+    const parsedTasks = JSON.parse(storedTasks);
+    parsedTasks.forEach((task) => {
+      const newTask = new Task(
+        task._name,
+        task._description,
+        task._date,
+        task._priority,
+        task._project || "None"
+      );
+      newTask.id = task.id;
+      tasksList.push(newTask);
+    });
   }
 }

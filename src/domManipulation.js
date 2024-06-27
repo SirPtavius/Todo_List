@@ -1,5 +1,13 @@
+import {
+  addTask,
+  Task,
+  removeTask,
+  updateTask,
+  loadTasksFromLocalStorage,
+} from "./task";
+import { saveDataToLocalStorage } from "./eventHandler";
 import { projectsList } from "./project";
-import { addTask, Task, removeTask, updateTask } from "./task";
+import { renderTasks } from "./index";
 
 export function createForm() {
   const divElement = document.querySelector(".info.blurred-box");
@@ -37,8 +45,8 @@ export function createForm() {
   // Populate project options
   projectsList.forEach((project) => {
     const option = document.createElement("option");
-    option.setAttribute("id", project.name);
     option.textContent = project.name;
+    option.value = project.name; // Adjust as per your project needs
     selectProject.appendChild(option);
   });
 
@@ -131,10 +139,11 @@ export function createForm() {
     const priority = selectPriority.value;
     const project = selectProject.value;
 
-    // Task instance
     const newTask = new Task(taskName, description, date, priority, project);
     addTask(newTask);
     addTaskToDOM(newTask);
+
+    saveDataToLocalStorage();
 
     divElement.innerHTML = "";
   });
@@ -145,7 +154,7 @@ export function addTaskToDOM(task) {
 
   const taskInfoDiv = document.createElement("div");
   taskInfoDiv.classList.add("taskInfo", "blurred-box");
-  taskInfoDiv.setAttribute("data-project", task.project);
+  taskInfoDiv.setAttribute("data-project", task.project || "None");
   taskInfoDiv.setAttribute("data-task-id", task.id);
 
   const leftInfoDiv = document.createElement("div");
@@ -220,9 +229,11 @@ export function addTaskToDOM(task) {
     removeTask(task.id);
     taskInfoDiv.remove();
   });
+
   detailsButton.addEventListener("click", function () {
     showTaskDetails(task);
   });
+
   modifyImg.addEventListener("click", () => {
     editTaskForm(task);
   });
@@ -238,6 +249,11 @@ export function addTaskToDOM(task) {
 
   tasksContainer.appendChild(taskInfoDiv);
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadTasksFromLocalStorage();
+  renderTasks();
+});
 
 export function showTaskDetails(task) {
   const divElement = document.querySelector(".info.blurred-box");
@@ -477,5 +493,6 @@ export function updateTaskInDOM(updatedTask) {
         priorityP.textContent = "Unknown";
     }
     taskInfoDiv.setAttribute("data-project", updatedTask.project);
+    saveDataToLocalStorage();
   }
 }

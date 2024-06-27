@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: "index_bundle.js",
     path: path.resolve(__dirname, "dist"),
-    clean: true, // Pulire la cartella dist prima di ogni build
+    clean: true,
   },
   module: {
     rules: [

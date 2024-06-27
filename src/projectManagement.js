@@ -1,6 +1,7 @@
 import { Project, projectsList } from "./project";
 import { updateProjectOptions, filterTasksByProject } from "./utils";
 import { tasksList } from "./task";
+
 const projects = document.querySelector(".btnProjects");
 projects.addEventListener("click", newProject);
 
@@ -102,4 +103,14 @@ export function newProject() {
 
     divInfo.innerHTML = "";
   });
+}
+
+// Function to save projectsList to localStorage
+function saveProjects() {
+  localStorage.setItem("projectsList", JSON.stringify(projectsList));
+}
+
+// Function to save tasksList to localStorage
+function saveTasks() {
+  localStorage.setItem("tasksList", JSON.stringify(tasksList));
 }

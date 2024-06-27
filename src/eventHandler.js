@@ -1,5 +1,7 @@
 import { createForm } from "./domManipulation";
 import { getFormattedDate } from "./utils";
+import { projectsList } from "./project";
+import { tasksList } from "./task";
 
 const btnNewTask = document.querySelector(".newTask");
 btnNewTask.addEventListener("click", createForm);
@@ -40,4 +42,9 @@ function showTodayTasks() {
       task.style.display = "none";
     }
   });
+}
+
+export function saveDataToLocalStorage() {
+  localStorage.setItem("projectsList", JSON.stringify(projectsList));
+  localStorage.setItem("tasksList", JSON.stringify(tasksList));
 }

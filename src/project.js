@@ -1,4 +1,3 @@
-// Lista globale dei progetti
 export let projectsList = [];
 
 export class Project {
