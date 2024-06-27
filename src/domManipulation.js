@@ -45,8 +45,8 @@ export function createForm() {
   // Populate project options
   projectsList.forEach((project) => {
     const option = document.createElement("option");
-    option.textContent = project.name;
-    option.value = project.name; // Adjust as per your project needs
+    option.textContent = project.name || project._name;
+    option.value = project.name || project._name;
     selectProject.appendChild(option);
   });
 
@@ -345,9 +345,10 @@ export function editTaskForm(task) {
   // Populate project options
   projectsList.forEach((project) => {
     const option = document.createElement("option");
-    option.textContent = project.name;
-    option.value = project.name;
-    if (project.name === task.project) {
+    option.textContent = project.name || project._name;
+    option.value = project.name || project._name;
+    //|| task._project might be wrong
+    if (project.name === task.project || task._project) {
       option.setAttribute("selected", "selected");
     }
     selectProject.appendChild(option);

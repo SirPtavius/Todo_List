@@ -22,7 +22,6 @@ import { createForm, addTaskToDOM } from "./domManipulation";
 
 // Funzione per caricare i dati dal localStorage
 function loadDataFromLocalStorage() {
-  console.log("Loading data from localStorage...");
   loadProjectsFromLocalStorage();
   loadTasksFromLocalStorage();
   renderProjects();
@@ -37,13 +36,9 @@ function loadProjectsFromLocalStorage() {
     try {
       const parsedProjects = JSON.parse(storedProjects);
       projectsList.splice(0, projectsList.length, ...parsedProjects); // Replace contents of projectsList
-      console.log("Loaded projects:", projectsList);
     } catch (error) {
-      console.error("Error parsing projects from localStorage:", error);
       projectsList.length = 0; // Clear projectsList if parsing fails
     }
-  } else {
-    console.log("No projects found in localStorage");
   }
 }
 
@@ -67,25 +62,16 @@ function loadTasksFromLocalStorage() {
         newTask.id = task.id;
         tasksList.push(newTask);
       });
-
-      console.log("Loaded tasks:", tasksList);
     } catch (error) {
-      console.error("Error parsing tasks from localStorage:", error);
       tasksList.length = 0; // Clear tasksList if parsing fails
     }
-  } else {
-    console.log("No tasks found in localStorage");
   }
 }
 
 function renderProjects() {
-  console.log("Rendering projects...");
   const projectsContainer = document.querySelector(".domProjects");
-  if (!projectsContainer) {
-    console.error("domProjects element not found");
-    return;
-  }
-  console.log("Projects container found:", projectsContainer);
+  if (!projectsContainer) return;
+
   projectsContainer.innerHTML = "";
 
   projectsList.forEach((project, index) => {
@@ -153,6 +139,8 @@ function renderProjects() {
 
 export function renderTasks() {
   const tasksContainer = document.querySelector(".tasks");
+  if (!tasksContainer) return;
+
   tasksContainer.innerHTML = "";
 
   tasksList.forEach((task) => {
@@ -161,7 +149,6 @@ export function renderTasks() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed");
   loadDataFromLocalStorage();
 
   const btnNewTask = document.querySelector(".newTask");
@@ -170,7 +157,5 @@ document.addEventListener("DOMContentLoaded", () => {
       createForm();
       saveDataToLocalStorage();
     });
-  } else {
-    console.error(".newTask button not found");
   }
 });

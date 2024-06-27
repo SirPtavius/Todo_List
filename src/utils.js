@@ -36,9 +36,6 @@ export function filterTasksByProject(projectName) {
 
   allTasks.forEach((task) => {
     const taskProject = task.getAttribute("data-project");
-    console.log(
-      `Filtering for project: ${projectName}, task project: ${taskProject}`
-    );
 
     if (!taskProject) {
       console.warn(
@@ -47,16 +44,13 @@ export function filterTasksByProject(projectName) {
         )} does not have a project assigned.`
       );
     }
-    console.log(task);
-    console.log("taskProject=", taskProject, "projectName=", projectName);
+
     if (
       taskProject === projectName ||
       (projectName === "None" && !taskProject)
     ) {
-      console.log(`Showing task with ID ${task.getAttribute("data-task-id")}`);
       task.style.display = "flex";
     } else {
-      console.log(`Hiding task with ID ${task.getAttribute("data-task-id")}`);
       task.style.display = "none";
     }
   });
