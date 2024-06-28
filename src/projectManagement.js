@@ -1,6 +1,7 @@
 import { Project, projectsList } from "./project";
 import { updateProjectOptions, filterTasksByProject } from "./utils";
 import { tasksList } from "./task";
+import { saveDataToLocalStorage } from "./eventHandler";
 
 const projects = document.querySelector(".btnProjects");
 projects.addEventListener("click", newProject);
@@ -61,11 +62,12 @@ export function newProject() {
 
     deleteImg.addEventListener("click", function () {
       const projectName = button.innerText;
+      console.log(button.innerText);
       const divProject = this.parentNode;
-
       divProject.remove();
       //remove tag option
 
+      // Remove project from projectsList
       const projectIndex = projectsList.findIndex(
         (project) => project.name === projectName
       );
@@ -91,6 +93,7 @@ export function newProject() {
       });
 
       updateProjectOptions();
+      saveDataToLocalStorage();
     });
 
     const domProjects = document.querySelector(".domProjects");
@@ -100,7 +103,7 @@ export function newProject() {
     domProjects.appendChild(divProject);
 
     updateProjectOptions();
-
+    saveDataToLocalStorage();
     divInfo.innerHTML = "";
   });
 }

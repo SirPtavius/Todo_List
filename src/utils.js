@@ -26,11 +26,12 @@ export function updateProjectOptions() {
   // Populate project options
   projectsList.forEach((project) => {
     const option = document.createElement("option");
-    option.setAttribute("value", project._name); // Adjust according to your project structure
-    option.textContent = project._name; // Adjust according to your project structure
+    option.setAttribute("value", project._name);
+    option.textContent = project._name;
     selectProject.appendChild(option);
   });
 }
+
 export function filterTasksByProject(projectName) {
   const allTasks = document.querySelectorAll(".taskInfo");
 

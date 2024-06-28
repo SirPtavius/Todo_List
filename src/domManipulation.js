@@ -132,6 +132,7 @@ export function createForm() {
   buttonCancel.addEventListener("click", () => {
     divElement.innerHTML = "";
   });
+
   buttonSubmit.addEventListener("click", () => {
     const taskName = inputName.value;
     const description = textarea.value;
@@ -440,24 +441,25 @@ export function editTaskForm(task) {
   buttonCancel.addEventListener("click", () => {
     divElement.innerHTML = "";
   });
+
   buttonSubmit.addEventListener("click", () => {
     const updatedTask = {
       id: task.id,
-      name: inputName.value,
-      description: textarea.value,
-      date: inputDate.value,
-      priority: selectPriority.value,
-      project: selectProject.value,
+      _name: inputName.value,
+      _description: textarea.value,
+      _date: inputDate.value,
+      _priority: selectPriority.value,
+      _project: selectProject.value,
     };
 
-    task._date = updatedTask.date;
-    task._name = updatedTask.name;
-    task._description = updatedTask.description;
-    task._priority = updatedTask.priority;
-    task._project = updatedTask.project;
+    task._name = updatedTask._name;
+    task._description = updatedTask._description;
+    task._date = updatedTask._date;
+    task._priority = updatedTask._priority;
+    task._project = updatedTask._project;
 
-    updateTask(updatedTask);
-    updateTaskInDOM(updatedTask);
+    updateTask(task);
+    updateTaskInDOM(task);
 
     divElement.innerHTML = "";
   });

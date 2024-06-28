@@ -46,12 +46,15 @@ export function removeTask(taskId) {
 
   localStorage.setItem("tasksList", JSON.stringify(tasksList));
 }
+
 export function updateTask(updatedTask) {
   const taskIndex = tasksList.findIndex((task) => task.id === updatedTask.id);
   if (taskIndex !== -1) {
     tasksList[taskIndex] = updatedTask;
+    saveDataToLocalStorage();
   }
 }
+
 export function loadTasksFromLocalStorage() {
   const storedTasks = localStorage.getItem("tasksList");
   if (storedTasks) {

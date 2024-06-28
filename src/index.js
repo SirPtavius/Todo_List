@@ -12,7 +12,7 @@ import "./eventHandler";
 import "./projectManagement";
 import "./utils";
 import "./task";
-// index.js
+
 import { Task } from "./task";
 import { filterTasksByProject, updateProjectOptions } from "./utils";
 import { saveDataToLocalStorage } from "./eventHandler";
@@ -28,7 +28,6 @@ function loadDataFromLocalStorage() {
   renderTasks();
 }
 
-// Funzione per caricare i progetti dal localStorage
 function loadProjectsFromLocalStorage() {
   const storedProjects = localStorage.getItem("projectsList");
 
@@ -42,7 +41,6 @@ function loadProjectsFromLocalStorage() {
   }
 }
 
-// Funzione per caricare i task dal localStorage
 function loadTasksFromLocalStorage() {
   const storedTasks = localStorage.getItem("tasksList");
 
@@ -104,7 +102,7 @@ function renderProjects() {
       const tasksContainer = document.querySelector(".tasks");
       const tasksToRemove = [];
       tasksList.forEach((task, index) => {
-        if (task.project === projectName) {
+        if (task._project === projectName) {
           // Remove task from DOM
           const taskElement = tasksContainer.querySelector(
             `.taskInfo[data-task-id="${task.id}"]`
